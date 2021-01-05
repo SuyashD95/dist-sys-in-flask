@@ -98,5 +98,48 @@
   </article>
   <hr>
 
+  <article id="two_generals_problem">
+    <h2>The Two Generals Problem</h2>
+    <h4>Problem Statement</h4>
+    <img src="/static/images/two_generals_problem.png" alt="Image describing the problem">
+    <h4>Sequence Diagrams showing failed messages</h4>
+    <img src="/static/images/two_generals_problem_sequence_diagram.png" alt="Sequence Diagram illustrating the problem">
+
+    <section>
+      <h3>How should the Generals decide?</h3>
+      <ol>
+        <li>
+          <h4>General 1 always attacks, even if no response is received?</h4>
+          <ol>
+            <li>Sends lots of messengers to increase probability that one will get through.</li>
+            <li>If all are captured, general 2 does not know about the attack, so general 1 loses.</li>
+          </ol>
+        </li>
+        <li>
+          <h4>General 1 only attacks if positive response from general 2 is received?</h4>
+          <ol>
+            <li>Now general 1 is safe.</li>
+            <li>But general 2 knows that general 1 will only attack if general 2's response gets through.</li>
+            <li>Now general 2 is in the same sitation as general 1 in option 1.</li>
+          </ol>
+        </li>
+      </ol>
+    </section>
+
+    <section>
+      <h3>The Two Generals Problem applied to Distributed Systems</h3>
+      <img src="/static/images/two_generals_problem_applied.png" alt="Application of the Two Generals problem in distributed systems" srcset="">
+    </section>
+
+    <section>
+      <h3>Conclusion</h3>
+      <p>This could potentially lead to an infinte chain of messages between the two generals, each waiting for the other to go ahead. Thus, there will never be absolute certainty about an attack in which both generals participate.</p>
+      <p>The above problem illustrates an important core challenge in dealing with distributed systems known as <strong>no common knowledge</strong> i.e., there is always a possibility of a sent message not being able to reach its recipient which is problematic because they are the only means of communication between the nodes.</p>
+    </section>
+  </article>
+  <hr>
+
+    <section>
+
 </body>
 </html>
