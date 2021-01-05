@@ -139,7 +139,46 @@
   </article>
   <hr>
 
+  <article id="byzantine_generals_problem">
+    <h2>The Byzantine Generals Problem</h2>
+    <p>Like <a href="#two_generals_problem">The Two Generals Problem</a> but the key difference are as follows:</p>
+    <ul>
+      <li>The messengers are reliable. Thus, every message that has been sent will be received and no failures in communication will happen.</li>
+      <li>Some of the generals might have malicious intent against the Byzantine Empire and thus, are traitors trying to undermine the efforts of other generals.</li>
+    </ul>
+
     <section>
+      <h3>Problem Statement</h3>
+      <ul>
+        <li>Up to <em>f</em> generals might behave maliciously.</li>
+        <li>Honest generals don't know who the malicious ones are.</li>
+        <li>The malicious generals may collude.</li>
+        <li>Nevertheless, honest generals must agree on a plan.</li>
+      </ul>
+      
+      <section>
+        <img src="/static/images/byzantine_generals_problem.png" alt="Byzantine Generals Problem">
+        <img src="/static/images/byzantine_generals_sequence_diagram.png" alt="Byzantine Generals Sequence Diagram">
+      </section>
+    </section>
+
+    <section>
+      <h3>What are the Potential Solutions?</h3>
+      <p>If there are up to <em>f</em> no. of traitorous generals, then we would need <strong>3f + 1</strong> generals (i.e., we could tolerate up to < 1/3 to be traitors).</p>
+      <p>Cryptopgraphy (secret codes) can also be used to increase the trust among the generals involved in the attack.</p>
+      <ul>
+        <li>Thus, we would only need <strong>2f + 1</strong> generals i.e., we would only need (f + 1) correct generals to deal with <em>f</em> traitorous generals.</li>
+        <li>In distributed systems, "secret codes" takes the form of <strong>digitally signed</strong> messages.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>Conclusion</h3>
+      <p>The core challenge presented by the Byzantine Generals' problem is the concept of <strong>trust in relationships</strong> that exist between various entities involved in a distributed system.</p>
+      <p>Trust in relationship among the different entities involved in a system is a difficult to deal with because there are always chances of one entity trying to engage in malicious behavior for their own benefit at the cost of the entire system.</p>
+    </section>
+  </article>
+  <hr>
 
 </body>
 </html>
