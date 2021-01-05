@@ -1,12 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/style.css"></link>
-    <title>Distributed Systems and Lamport's Clock</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/css/style.css"></link>
+  <title>Distribution Systems</title>
 </head>
 <body>
-    <h1>This page will house the presentation for Distribution Systems and Lamport's Clock.</h1>
+  <h1>Introduction to Distributed Systems</h1>
+  <h3>A brief exploration of some of the key concepts/ideas that exist in the field of Distributed Systems.</h3>
+
+  <div>
+    <h3>Table of Contents</h3>
+    <table>
+      <tr>
+        <td><a href="#distributed_system">What is a Distributed System?</a></td>
+      </tr>
+      <tr>
+        <td><a href="#use_distributed_system">Why should we use Distributed Systems?</a></td>
+      </tr>
+      <tr>
+        <td><a href="#avoid_distributed_system">Why should we avoid using Distributed Systems?</a></td>
+      </tr>
+      <tr>
+        <td><a href="#rpc">Remote Procedure Calls (RPCs)</a></td>
+      </tr>
+      <tr>
+        <td><a href="#two_generals_problem">Two Generals Problem</a></td>
+      </tr>
+      <tr>
+        <td><a href="#byzantine_generals_problem">Byzantine Generals Problem</a></td>
+      </tr>
+    </table>
+  </div>
+
+  <article id="distributed_system">
+    <h2>What is a Distributed System?</h2>
+    <p>A distributed system is a system of compute devices connected with one another via network (like the Internet) and exchanging messages as the sole system to communicate with one another</p>
+    <p>In distributed systems, we use a <strong>simple abstraction</strong> of <strong>a single node sending a message to another node</strong> to represent all possible nodes of communication in a distibuted systems.</p>
+    
+    <section>
+      <h3>Distributed Systems Example: Online Payment Transfers</h3>
+      <img src="static/images/distributed_systems_communication_abstraction.png" alt="Distributed Systems Communication Abstraction"/>
+      </section>
+  </article>
+  <hr>
+
+  <article id="use_distributed_system">
+    <h2>Why should we use Distributed Systems?</h2>
+    <ul>
+      <li>Some applications are inherently distributed.</li>
+      <li>For better reliability</li>
+      <li>For better performance</li>
+      <li>To solve bigger problems</li>
+    </ul>
+  </article>
+  <hr>
+
+  <article id="avoid_distributed_system">
+    <h2>Why should we avoid using Distributed Systems?</h2>
+    <ul>
+      <li>Communication may fail (and we might not even it has failed) either due to network failures, or slow transfer speeds.</li>
+      <li>Processes may crash (and we might not know). For e.g., a system might crash and thus needs to reboot, making it unable to deal with user requests.</li>
+      <li>All of this may happen non-deterministically.</li>
+      <li>Initial cost of investment is high and maintaining and development of distributed systems is a complicated affair.</li>
+    </ul>
+  </article>
+  <hr>
+
+  <article id="rpc">
+    <h2>Remote Procedure Call (RPC)</h2>
+    <ul>
+      <li>Implementation of a message in a distributed system.</li>
+      <li>RPC can be simply defined as functions that make a call to a remote function present on different nodes which are responsible for the actual implmentation of the arguments passed onto them via a network (Internet)</li>
+      <li>An important property of RPC is to hide where the actual resources are in a system which is called as <strong>Location Transparency</strong>.</li>
+    </ul>
+
+    <section>
+      <h3>RPC Framework or Middleware</h3>
+      <ul>
+        <li>RPCs are typically implemented via the use of RPC frameworks.</li>
+        <li>This is a piece of software which performs the translation of the function call (in your programming language) into the message (and vice-versa) to be passed via a network.</li>
+        <li>The RPC framework usually consists of two components: RPC Client and RPC Server.</li>
+      </ul>
+      <img src="/static/images/online_shop_rpc_framework.png" alt="RPC Framework Example">
+    </section>
+
+    <section>
+      <h3>How does RPC Framework work?</h3>
+      <ul>
+        <li>The RPC Client generates/contains a <em>stub function</em> whose method signature is identical to the actual function to be called on the server side.</li>
+        <li>The responsibility of the stub function is to provide an interface for your programming language and <em>marshals</em> (or encodes) the data to an independent binary format (JSON, XML) that could be send across the network (Internet) as the message to the RPC server.</li>
+        <li>The RPC server receives the message and <em>unmarshals</em> (or decodes) it and then pass it to the server where it is executed, and the result is submitted back to the RPC client after marshaling it into a message format.</li>
+        <li>The RPC client gets the result and decodes the  arguments passed on the resultant message and passes onto the language running on the client side, to handle with the contents of the result.</li>
+      </ul>
+    </section>
+  </article>
+  <hr>
+
+  <article id="two_generals_problem">
+    <h2>The Two Generals Problem</h2>
+    <h4>Problem Statement</h4>
+    <img src="/static/images/two_generals_problem.png" alt="Image describing the problem">
+    <h4>Sequence Diagrams showing failed messages</h4>
+    <img src="/static/images/two_generals_problem_sequence_diagram.png" alt="Sequence Diagram illustrating the problem">
+
+    <section>
+      <h3>How should the Generals decide?</h3>
+      <ol>
+        <li>
+          <h4>General 1 always attacks, even if no response is received?</h4>
+          <ol>
+            <li>Sends lots of messengers to increase probability that one will get through.</li>
+            <li>If all are captured, general 2 does not know about the attack, so general 1 loses.</li>
+          </ol>
+        </li>
+        <li>
+          <h4>General 1 only attacks if positive response from general 2 is received?</h4>
+          <ol>
+            <li>Now general 1 is safe.</li>
+            <li>But general 2 knows that general 1 will only attack if general 2's response gets through.</li>
+            <li>Now general 2 is in the same sitation as general 1 in option 1.</li>
+          </ol>
+        </li>
+      </ol>
+    </section>
+
+    <section>
+      <h3>The Two Generals Problem applied to Distributed Systems</h3>
+      <img src="/static/images/two_generals_problem_applied.png" alt="Application of the Two Generals problem in distributed systems" srcset="">
+    </section>
+
+    <section>
+      <h3>Conclusion</h3>
+      <p>This could potentially lead to an infinte chain of messages between the two generals, each waiting for the other to go ahead. Thus, there will never be absolute certainty about an attack in which both generals participate.</p>
+      <p>The above problem illustrates an important core challenge in dealing with distributed systems known as <strong>no common knowledge</strong> i.e., there is always a possibility of a sent message not being able to reach its recipient which is problematic because they are the only means of communication between the nodes.</p>
+    </section>
+  </article>
+  <hr>
+
+  <article id="byzantine_generals_problem">
+    <h2>The Byzantine Generals Problem</h2>
+    <p>Like <a href="#two_generals_problem">The Two Generals Problem</a> but the key difference are as follows:</p>
+    <ul>
+      <li>The messengers are reliable. Thus, every message that has been sent will be received and no failures in communication will happen.</li>
+      <li>Some of the generals might have malicious intent against the Byzantine Empire and thus, are traitors trying to undermine the efforts of other generals.</li>
+    </ul>
+
+    <section>
+      <h3>Problem Statement</h3>
+      <ul>
+        <li>Up to <em>f</em> generals might behave maliciously.</li>
+        <li>Honest generals don't know who the malicious ones are.</li>
+        <li>The malicious generals may collude.</li>
+        <li>Nevertheless, honest generals must agree on a plan.</li>
+      </ul>
+      
+      <section>
+        <img src="/static/images/byzantine_generals_problem.png" alt="Byzantine Generals Problem">
+        <img src="/static/images/byzantine_generals_sequence_diagram.png" alt="Byzantine Generals Sequence Diagram">
+      </section>
+    </section>
+
+    <section>
+      <h3>What are the Potential Solutions?</h3>
+      <p>If there are up to <em>f</em> no. of traitorous generals, then we would need <strong>3f + 1</strong> generals (i.e., we could tolerate up to < 1/3 to be traitors).</p>
+      <p>Cryptopgraphy (secret codes) can also be used to increase the trust among the generals involved in the attack.</p>
+      <ul>
+        <li>Thus, we would only need <strong>2f + 1</strong> generals i.e., we would only need (f + 1) correct generals to deal with <em>f</em> traitorous generals.</li>
+        <li>In distributed systems, "secret codes" takes the form of <strong>digitally signed</strong> messages.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>Conclusion</h3>
+      <p>The core challenge presented by the Byzantine Generals' problem is the concept of <strong>trust in relationships</strong> that exist between various entities involved in a distributed system.</p>
+      <p>Trust in relationship among the different entities involved in a system is a difficult to deal with because there are always chances of one entity trying to engage in malicious behavior for their own benefit at the cost of the entire system.</p>
+    </section>
+  </article>
+  <hr>
+
 </body>
 </html>
