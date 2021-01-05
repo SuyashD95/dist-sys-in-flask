@@ -1,3 +1,6 @@
+# Editor-specific folders/files (VSCode, Sublime, etc)
+.vscode
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
