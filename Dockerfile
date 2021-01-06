@@ -10,8 +10,6 @@ ENV VIRTUAL_ENV=/home/app/flask_proj
 RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
-ENV FLASK_APP=app.py
-
 # Install dependencies
 COPY requirements.txt . 
 RUN pip install --requirement requirements.txt
@@ -19,6 +17,7 @@ RUN pip install --requirement requirements.txt
 # Copy the contents from the host to the image's filesystem
 COPY . .
 
-EXPOSE 5000
+# Open port 8080 in the Container for connections
+EXPOSE 8080
 
-CMD python3 -m flask run
+ENTRYPOINT [ "python3", "app.py" ]
